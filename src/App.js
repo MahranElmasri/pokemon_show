@@ -1,13 +1,26 @@
 import React, { Component } from "react";
-import logo from "./logo.svg";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+
+import NavBar from "./components/layout/NavBar";
+import Dashboard from "../src/components/layout/Dashbord";
+import Pokemon from "./components/pokemon/Pokemon";
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header" />
-      </div>
+      <Router>
+        <div className="App">
+          <NavBar />
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={Dashboard} />
+              <Route exact path="/pokemon/:pokemonIndex" component={Pokemon} />
+            </Switch>
+          </div>
+        </div>
+      </Router>
     );
   }
 }
