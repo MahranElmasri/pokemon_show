@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Axios from "axios";
 
 const TYPE_COLORS = {
-  bug1: "B1C12E",
   bug: "B1C12E",
   dark: "4F3A2D",
   dragon: "755EDF",
@@ -28,6 +27,7 @@ export default class Pokemon extends Component {
     name: "",
     pokemonIndex: "",
     imageUrl: "",
+    imageGroup: [],
     types: [],
     description: "",
     statTitleWidth: 3,
@@ -61,9 +61,8 @@ export default class Pokemon extends Component {
 
     // Get Pokemon Information
     const pokemonRes = await Axios.get(pokemonUrl);
-
     const name = pokemonRes.data.name;
-    const imageUrl = pokemonRes.data.sprites.front_default;
+    const imageUrl = `https://pokeres.bastionbot.org/images/pokemon/${pokemonIndex}.png`;
 
     let { hp, attack, defense, speed, specialAttack, specialDefense } = "";
 
@@ -184,8 +183,24 @@ export default class Pokemon extends Component {
   }
 
   render() {
+    const poktype = this.state.types.map(type => (
+      <span
+        key={type}
+        className="badge badge-pill mr-1 card-title"
+        style={{
+          backgroundColor: `#${TYPE_COLORS[type]}`,
+          color: "white"
+        }}
+      >
+        {type
+          .toLowerCase()
+          .split(" ")
+          .map(s => s.charAt(0).toUpperCase() + s.substring(1))
+          .join(" ")}
+      </span>
+    ));
     return (
-      <div className="col">
+      <div className="col jumbotron">
         <div className="card">
           <div className="card-header">
             <div className="row">
@@ -194,24 +209,7 @@ export default class Pokemon extends Component {
                 <h5>{this.state.pokemonIndex}</h5>
               </div>
               <div className="col-7">
-                <div className="float-right">
-                  {this.state.types.map(type => (
-                    <span
-                      key={type}
-                      className="badge badge-pill mr-1"
-                      style={{
-                        backgroundColor: `#${TYPE_COLORS[type]}`,
-                        color: "white"
-                      }}
-                    >
-                      {type
-                        .toLowerCase()
-                        .split(" ")
-                        .map(s => s.charAt(0).toUpperCase() + s.substring(1))
-                        .join(" ")}
-                    </span>
-                  ))}
-                </div>
+                <div className="float-right">{poktype}</div>
               </div>
             </div>
           </div>
@@ -445,7 +443,52 @@ export default class Pokemon extends Component {
             </div>
           </div>
           {/* Footer */}
-          <div class="card-footer text-muted">PokeShow 2019</div>
+
+          <div class="card-footer text-muted">
+            <h2 className="text-muted">Evolutions</h2>
+            <hr />
+            <div className="row align-items-center">
+              <div className=" col-md-4 ">
+                <img
+                  className="img-fluid img-thumbnail"
+                  alt=""
+                  src={`https://pokeres.bastionbot.org/images/pokemon/${Number(
+                    this.state.pokemonIndex
+                  )}.png`}
+                />
+                <div className="text-center">
+                  {poktype}
+                  <small>{`# ${Number(this.state.pokemonIndex)}`}</small>
+                </div>
+              </div>
+              <div className=" col-md-4 ">
+                <img
+                  alt=""
+                  src={`https://pokeres.bastionbot.org/images/pokemon/${Number(
+                    this.state.pokemonIndex
+                  ) + 1}.png`}
+                  className="img-fluid img-thumbnail"
+                />
+                <div className="text-center">
+                  {poktype}{" "}
+                  <small>{`# ${Number(this.state.pokemonIndex) + 1}`}</small>
+                </div>
+              </div>
+              <div className=" col-md-4 ">
+                <img
+                  alt=""
+                  src={`https://pokeres.bastionbot.org/images/pokemon/${Number(
+                    this.state.pokemonIndex
+                  ) + 2}.png`}
+                  className="img-fluid img-thumbnail"
+                />
+                <div className="text-center">
+                  {poktype}
+                  <small>{`# ${Number(this.state.pokemonIndex) + 2}`}</small>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     );

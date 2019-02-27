@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import PokemonCard from "./PokemonCard";
 import axios from "axios";
+import loader from "../../../src/loader.gif";
 export default class PokemonList extends Component {
   state = {
     url: "https://pokeapi.co/api/v2/pokemon/?offset=0&limit=32",
@@ -25,7 +26,7 @@ export default class PokemonList extends Component {
             ))}
           </div>
         ) : (
-          <h1>Loadind...</h1>
+          <img className="loader" alt="loading" src={loader} />
         )}
       </React.Fragment>
     );

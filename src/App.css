@@ -1,13 +1,18 @@
 .App {
-  background-color: #ff7777;
+  background-color: #c7c2c2;
   padding-top: 4rem;
   min-height: 100vh;
 }
 .navbar {
-  background-color: #ef5350 !important;
-  border-bottom: 1px solid #b30404;
+  border-bottom: 1px solid #aaaaaa;
   opacity: 0.75;
 }
-.navbar:hover {
-  color: #000;
+.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform: -webkit-translate(-50%, -50%);
+  transform: -moz-translate(-50%, -50%);
+  transform: -ms-translate(-50%, -50%);
 }
